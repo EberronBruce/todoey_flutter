@@ -21,9 +21,9 @@ const InputDecoration kTaskTextFieldDecoration = InputDecoration(
 );
 
 const kFillButtonStyle = ButtonStyle(
-  backgroundColor: MaterialStatePropertyAll<Color?>(Colors.lightBlueAccent),
-  foregroundColor: MaterialStatePropertyAll<Color?>(Colors.white),
-  shape: MaterialStatePropertyAll<OutlinedBorder?>(
+  backgroundColor: WidgetStatePropertyAll<Color?>(Colors.lightBlueAccent),
+  foregroundColor: WidgetStatePropertyAll<Color?>(Colors.white),
+  shape: WidgetStatePropertyAll<OutlinedBorder?>(
     RoundedRectangleBorder(borderRadius: BorderRadius.zero),
   ),
 );
