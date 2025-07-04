@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:todoey_flutter/widgets/task_list.dart';
 import 'package:todoey_flutter/screens/add_task_screen.dart';
+import 'package:todoey_flutter/models/task.dart';
 
-class TasksScreen extends StatelessWidget {
+class TasksScreen extends StatefulWidget {
   const TasksScreen({super.key});
+
+  @override
+  State<TasksScreen> createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
+  List<Task> tasks = [];
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +27,7 @@ class TasksScreen extends StatelessWidget {
               bottom: 30.0,
               left: 30.0,
             ),
-            child: HeaderColumn(),
+            child: HeaderColumn(taskCount: tasks.length),
           ),
           Expanded(
             child: Container(
@@ -31,7 +39,7 @@ class TasksScreen extends StatelessWidget {
                   topLeft: Radius.circular(20.0),
                 ),
               ),
-              child: TasksList(),
+              child: TasksList(tasks: tasks),
             ),
           ),
         ],
@@ -49,7 +57,14 @@ class TasksScreen extends StatelessWidget {
                 padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewInsets.bottom,
                 ),
-                child: AddTaskScreen(),
+                child: AddTaskScreen(
+                  addTask: (newTaskTitle) {
+                    setState(() {
+                      tasks.add(Task(name: newTaskTitle));
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
               ),
             ),
           );
@@ -60,7 +75,8 @@ class TasksScreen extends StatelessWidget {
 }
 
 class HeaderColumn extends StatelessWidget {
-  const HeaderColumn({super.key});
+  final int taskCount;
+  const HeaderColumn({super.key, required this.taskCount});
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +97,10 @@ class HeaderColumn extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
-        Text('12 Tasks', style: TextStyle(color: Colors.white, fontSize: 18.0)),
+        Text(
+          '$taskCount Tasks',
+          style: TextStyle(color: Colors.white, fontSize: 18.0),
+        ),
       ],
     );
   }
