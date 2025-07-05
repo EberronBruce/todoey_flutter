@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todoey_flutter/widgets/task_list.dart';
 import 'package:todoey_flutter/screens/add_task_screen.dart';
-import 'package:todoey_flutter/models/task.dart';
+import '../models/task_data.dart';
 
-class TasksScreen extends StatefulWidget {
+class TasksScreen extends StatelessWidget {
   const TasksScreen({super.key});
-
-  @override
-  State<TasksScreen> createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [];
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +21,7 @@ class _TasksScreenState extends State<TasksScreen> {
               bottom: 30.0,
               left: 30.0,
             ),
-            child: HeaderColumn(taskCount: tasks.length),
+            child: HeaderColumn(),
           ),
           Expanded(
             child: Container(
@@ -39,7 +33,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   topLeft: Radius.circular(20.0),
                 ),
               ),
-              child: TasksList(tasks: tasks),
+              child: TasksList(),
             ),
           ),
         ],
@@ -57,14 +51,7 @@ class _TasksScreenState extends State<TasksScreen> {
                 padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewInsets.bottom,
                 ),
-                child: AddTaskScreen(
-                  addTask: (newTaskTitle) {
-                    setState(() {
-                      tasks.add(Task(name: newTaskTitle));
-                    });
-                    Navigator.pop(context);
-                  },
-                ),
+                child: AddTaskScreen(),
               ),
             ),
           );
@@ -75,8 +62,7 @@ class _TasksScreenState extends State<TasksScreen> {
 }
 
 class HeaderColumn extends StatelessWidget {
-  final int taskCount;
-  const HeaderColumn({super.key, required this.taskCount});
+  const HeaderColumn({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +84,7 @@ class HeaderColumn extends StatelessWidget {
           ),
         ),
         Text(
-          '$taskCount Tasks',
+          '${Provider.of<TaskData>(context).taskCount} Tasks',
           style: TextStyle(color: Colors.white, fontSize: 18.0),
         ),
       ],

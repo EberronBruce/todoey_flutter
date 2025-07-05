@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todoey_flutter/constants.dart';
+import 'package:todoey_flutter/models/task_data.dart';
 
 class AddTaskScreen extends StatefulWidget {
-  final Function addTask;
-  const AddTaskScreen({super.key, required this.addTask});
+  const AddTaskScreen({super.key});
 
   @override
   State<AddTaskScreen> createState() => _AddTaskScreenState();
@@ -43,7 +44,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             style: kFillButtonStyle,
             onPressed: () {
               if (newTaskTitle != null && newTaskTitle!.isNotEmpty) {
-                widget.addTask(newTaskTitle);
+                Provider.of<TaskData>(
+                  context,
+                  listen: false,
+                ).addTask(newTaskTitle!);
+                Navigator.pop(context);
               }
             },
             child: Text('Add', style: TextStyle(fontSize: 18)),

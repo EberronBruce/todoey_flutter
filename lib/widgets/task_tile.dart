@@ -4,12 +4,14 @@ class TaskTile extends StatelessWidget {
   final bool isChecked;
   final String taskTitle;
   final ValueChanged onChange;
+  final GestureLongPressCallback longPressCallback;
 
   const TaskTile({
     super.key,
     required this.isChecked,
     required this.taskTitle,
     required this.onChange,
+    required this.longPressCallback,
   });
 
   @override
@@ -26,6 +28,7 @@ class TaskTile extends StatelessWidget {
         value: isChecked,
         onChanged: onChange,
       ),
+      onLongPress: longPressCallback,
     );
   }
 }
